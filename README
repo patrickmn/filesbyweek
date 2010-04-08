@@ -1,0 +1,12 @@
+FilesByWeek
+http://patrickmylund.com/projects/filesbyweek/
+
+FilesByWeek is a Linux shell (bash) script that lets you check how many files
+in a directory were created (or last modified) in a certain week of the year,
+using Linux's find and date.
+
+It was designed to count the number of emails received in a few Linux/Postfix
+Maildirs every week (and thus excludes .Sent and any Courier/Dovecot IMAP files),
+but can be used on any kind of folder.
+
+Usage: ./filesbyweek <week> [dir]
