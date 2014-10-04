@@ -55,30 +55,30 @@
 #
 ######
 
-typeset -i YEAR WEEK COUNT
+declare -i YEAR WEEK COUNT
 
 WEEK=$1
 # Comment out the following line if the year starts on a Monday
-WEEK=$((WEEK-1))
+((WEEK--))
 # Use current system year by default. This can be changed to e.g.: YEAR=2008
-YEAR=`date +%Y`
+YEAR=$(date +%Y)
 TGTDIR=$2
 COUNT=0
 
-\find ${TGTDIR} \
+\find "$TGTDIR" \
 -type d \( -name "*.sent" -o -name "*.Sent" -o -name "courierimapkeywords" -o -name "courierimaphieracl" \) -prune -o \
 -type f \( ! -name "subscriptions" ! -name "courierimapsubscribed" ! -name "dovecot.index.log*" ! -name "dovecot.index" ! -name "maildirfolder" ! -name "dovecot-keywords" ! -name "dovecot.index.cache" ! -name "courierimapacl" ! -name "courierimapuiddb" ! -name "dovecot-uidlist" \) \
 -print |
 {
-    while read FILENAME; do
-	if [[ `\date +%Y-%W -r "${FILENAME}"` == ${YEAR}-${WEEK} ]]; then
+    while read -r FILENAME; do
+	if [[ $(\date +%Y-%W -r "$FILENAME") == "$YEAR-$WEEK" ]]; then
 	    # Uncomment to show the names of matching files
-	    # echo ${FILENAME}
-	    let COUNT++
+	    # echo "file: $FILENAME"
+	    ((COUNT++))
         fi
     done
 
-    echo Week $1 -- ${TGTDIR}: ${COUNT}
+    echo "Week $1 -- $TGTDIR: $COUNT"
 }
 
 exit 0
